@@ -7,15 +7,80 @@
     <script>
         function basicFunction(){
             alert("함수호출완료");
-
-            document.getElementById("result").innerHTML = alert("함수호출완료");;
         }
+
+        function basicFunction2(){
+            alert("함수호출2완료");
+            alert(makeString3());
+        }
+
+        function basicFunction3(name='Guest'){
+            alert("hello " + name);
+        }
+
+        function basicFunction4(a, b){
+            let total = a + b;
+            alert("합계 : " + (total));
+        }
+        
+        function basicFunction5(...numbers){
+            let total = numbers.reduce((a,b) => a+b,0);
+            alert("합계 : " + (total));
+        }
+
+        function makeString(){
+            return "hello world1";
+        }
+        const makeString2 = function(){return "hello world2"};
+        
+        const makeString3 = () => "hello world3";
+
     </script>
 </head>
 <body>
-    <h2>js 기본 함수 호출</h2>
-
-    <button onclick="basicFunction()">함수 호출</button>
+    <div>
+        <h2>js 기본 함수 호출</h2>
+        <button onclick="basicFunction()">함수 호출1</button>
+        <button onclick="basicFunction2()">함수 호출2</button>
+        <button onclick="basicFunction3()">함수 호출3</button>
+        <button onclick="basicFunction4(3, 6)">함수 호출4</button>
+        <button onclick="basicFunction5(10,20,30,40,50)">함수 호출5</button>
+    </div>
+    
+    <div>
+        <h2>계산기 프로그램</h2>
+        <p>숫자 값을 입력해주세요.</p>
+        <input type="number" id ="num1">
+        <input type="number" id="num2">
+        <p></p>
+        <label>사직연산선택 : </label>
+        <select id="calculator">
+            <option value="plus">덧셈</option>
+            <option value="minus">뺼셈</option>
+            <option value="multiply">곱셈</option>
+            <option value="devide">나눗셈</option>
+        </select>
+        <p></p>
+         <button onclick="calculator()">계산 결과 보기</button>
+    </div>
+    <script>
+        function calculator(){
+            const what = document.getElementById("calculator").value;
+            let num1 = Number(document.getElementById("num1").value);
+            let num2 = Number(document.getElementById("num2").value);
+            
+            if(what === "plus"){
+               alert((num1+num2));
+            }else if(what === "minus"){
+                alert((num1-num2));
+            } else if(what === "multiply"){
+                alert((num1*num2));
+            } else if(what === "devide"){
+                alert((num1/num2));
+            }
+        }
+    </script>
     <p id="result"></p>
+    
 </body>
 </html>

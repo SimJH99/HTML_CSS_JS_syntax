@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 작성</title>
+</head>
+<body>
+    <h2>이력서 작성</h2>
+
+    <div id="container">
+        <div class="item">
+            <input type="text" placeholder="텍스트를 입력하세요.">
+        </div>
+    </div>
+
+    <button onclick="addItem()">항목 추가</button>
+    <button onclick="delItem()">항목 삭제</button>
+
+    <script>
+        function addItem() {
+            var newItem = document.createElement("div");
+            newItem.className = "item";
+
+            var inputElement = document.createElement("input");
+            inputElement.type = "text";
+            inputElement.placeholder = "텍스트를 입력하세요.";
+
+            newItem.appendChild(inputElement);
+
+            document.getElementById("container").appendChild(newItem);
+            
+            var delItemList = document.getElementsByClassName("item");
+        }
+
+        function delItem(){
+            var delItemList = document.getElementsByClassName("item");
+
+            if(delItemList.length > 1){
+                delItemList[delItemList.length-1].remove();
+            }
+        }
+    </script>
+</body>
+</html>
