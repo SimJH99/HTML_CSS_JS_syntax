@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let currentId = 1;
+
+        async function getDataAndAppendToTable() {
+            try {
+                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${currentId}`);
+                console.log("ajax");                
+                console.log(response);
+
+                // Assuming response.data is an object with properties id, title, and userId
+                const rowData = response.data;
+
+                // Get the table body element
+                const tableBody = document.getElementById('info');
+
+                // Create a new row
+                const newRow = document.createElement('tr');
+
+                // Create cells for each column
+                const idCell = document.createElement('td');
+                idCell.textContent = rowData.id;
+
+                const titleCell = document.createElement('td');
+                titleCell.textContent = rowData.title;
+
+                const userIdCell = document.createElement('td');
+                userIdCell.textContent = rowData.userId;
+
+                // Append cells to the row
+                newRow.appendChild(idCell);
+                newRow.appendChild(titleCell);
+                newRow.appendChild(userIdCell);
+
+                // Append the row to the table body
+                tableBody.appendChild(newRow);
+
+                // Increase the currentId for the next request
+                currentId++;
+
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <a class="navbar-brand" href="./home.html">게시판 서비스</a>
+        <ul class="navbar-nav">
+            <li class="nac-item"><a class="nav-link" href="./register.html">회원 가입</a></li>
+            <li class="nac-item"><a class="nav-link" href="./post-list.html">글목록</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="page-header"><h1>게시글 목록</h1></div>
+        <div class="float-end">
+            <!-- Add a button to trigger the data fetching and table updating -->
+            <button class="btn btn-primary" onclick="getDataAndAppendToTable()">데이터 가져오기</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>userId</th>
+                </tr>
+            </thead>
+            <tbody id="info">
+                <!-- Table body content will be added dynamically -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
