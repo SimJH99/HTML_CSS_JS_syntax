@@ -1,52 +1,49 @@
+<!-- 콜백지옥이 나오는 이유 -->
+<!-- 함수를 매개변수로 둔 함수가 존재 -->
+<!-- 해당 함수가 콜백을 한다 -->
+<!-- 비동기 함수에서의 동기성 보장 -->
+<!-- 여러 비동기 작업을 연속해서 처리 하다보니 콜백 함수가 중첩되어 코드의 가독성과 유지관리가 어려워지는 경우가 발생 (콜백 지옥) -->
+<!-- 반복 되다 보니 콜백 지옥이 된다. -->
+<!-- 해결방법 : async await -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>callback 지옥</title>
-</head>
-<body>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <head>
+    <title>Nested Callback</title>
+  </head>
+  <body>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script>
-        async function callBackImp(){
-            try {
-                const response1 = await $.ajax({
-                    url: 'https://jsonplaceholder.typicode.com/posts/1',
-                    type: 'GET',
-                    dataType: 'json'
+      $(document).ready(function () {
+        $.ajax({
+          url: "https://jsonplaceholder.typicode.com/posts/1",
+          type: "GET",
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+            $.ajax({
+              url: "https://naver.com",
+              method: "POST",
+              dataType: "json",
+              data: response,
+              success: function (response2) {
+                console.log(response2);
+                $.ajax({
+                  url: "https://daum.com",
+                  method: "POST",
+                  dataType: "json",
+                  data: response2,
+                  success: function (response3) {
+                    console.log(response3);
+                  },
+                  error: function () {},
                 });
-                console.log("ajax");                
-                console.log(response1);                
-            } catch (error) {
-                console.log(error);
-            }
-            
-            // const response2 = await $.ajax({
-            //     url: 'https://naver.com',
-            //     type: 'POST',
-            //     dataType: 'json',
-            //     data: response1,
-            // });
-            // // console.log(response2);
-            // const response3 = await $.ajax({
-            //     url: 'https://daum.com',
-            //     type: 'POST',
-            //     dataType: 'json',
-            //     data: response2,
-            // });
-            // console.log(response3);
-
-            try {
-                const response1 = await axios.get('https://jsonplaceholder.typicode.com/posts/1');    
-                console.log("axios");                
-                console.log(response1.data);                
-            } catch (e) {
-                console.log(e);
-            }
-        }
-
-        callBackImp();
+              },
+              error: function () {},
+            });
+          },
+          error: function () {},
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
